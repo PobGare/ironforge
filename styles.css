@@ -1,0 +1,4895 @@
+:root {
+  --bg: #080907;
+  --panel: #0e100d;
+  --panel2: #121510;
+  --bone: #e8e3d7;
+  --muted: #8d938a;
+  --volt: #d6ff3c;
+  --red: #ff3b1f;
+  --line: rgba(232, 227, 215, 0.14);
+  --display: "Big Shoulders Display", sans-serif;
+  --sans: "Saira Semi Condensed", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.info-block[id] {
+  scroll-margin-top: 120px;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--bone);
+  font-family: var(--sans);
+  overflow-x: hidden;
+}
+
+body.lock {
+  overflow: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+.page-shell {
+  position: relative;
+  z-index: 1;
+  padding-top: 74px;
+}
+
+.noise {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 90;
+  opacity: 0.045;
+  mix-blend-mode: screen;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 170 170' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4'/%3E%3C/filter id='n'%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
+}
+
+.forge-particles {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.34;
+}
+
+.forge-cursor {
+  position: fixed;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(214, 255, 60, 0.55);
+  border-radius: 50%;
+  z-index: 120;
+  pointer-events: none;
+  transform: translate(-100px, -100px);
+  mix-blend-mode: difference;
+  transition:
+    width 0.2s,
+    height 0.2s,
+    background 0.2s;
+}
+
+.forge-cursor.hot {
+  width: 68px;
+  height: 68px;
+  background: rgba(214, 255, 60, 0.12);
+}
+
+.site-nav {
+  position: fixed;
+  z-index: 80;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 74px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: 0 3vw;
+  background: rgba(8, 9, 7, 0.78);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(232, 227, 215, 0.1);
+}
+
+.logo {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 1px;
+  font-family: var(--display);
+  font-size: 23px;
+  letter-spacing: 0.02em;
+}
+
+.logo span {
+  font-weight: 800;
+}
+
+.logo b {
+  font-weight: 500;
+  color: var(--red);
+}
+
+.logo small {
+  font: 500 6px var(--sans);
+  letter-spacing: 0.18em;
+  color: #687068;
+  margin-left: 5px;
+}
+
+.site-nav nav {
+  display: flex;
+  gap: 26px;
+}
+
+.site-nav nav a,
+.nav-cta,
+.menu-btn {
+  font-size: 8px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: #969a93;
+}
+
+.site-nav nav a {
+  position: relative;
+}
+
+.site-nav nav a:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: -8px;
+  height: 2px;
+  background: var(--volt);
+  transition: right 0.3s;
+}
+
+.site-nav nav a:hover:after,
+.site-nav nav a.active:after {
+  right: 0;
+}
+
+.nav-tools {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+}
+
+.nav-cta {
+  color: #0a0b09;
+  background: var(--volt);
+  padding: 10px 12px;
+  font-weight: 700;
+}
+
+.menu-btn {
+  display: none;
+  background: none;
+  border: 0;
+}
+
+.section {
+  padding: 115px 7vw;
+}
+
+.shell-wide {
+  margin-left: 3vw;
+  margin-right: 3vw;
+}
+
+.micro {
+  font-size: 7px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #7c8379;
+}
+
+.section-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 22px;
+  margin-bottom: 72px;
+}
+
+.section-head h2 {
+  font-family: var(--display);
+  font-size: clamp(52px, 6vw, 90px);
+  line-height: 0.82;
+  text-transform: uppercase;
+  letter-spacing: -0.035em;
+  margin: 0;
+  max-width: 1100px;
+}
+
+.section-head h2 em {
+  font-style: normal;
+  font-weight: 500;
+  color: var(--red);
+}
+
+/* universal button treatment */
+a[class*="cta"],
+.home-actions a,
+.performance-copy > a,
+.manifesto > a,
+.table-row a,
+.card-action,
+.buy-btn,
+.form-grid button {
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease,
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.home-actions a:after,
+.performance-copy > a:after,
+.manifesto > a:after,
+.table-row a:after,
+.card-action:after,
+.buy-btn:after,
+.form-grid button:after,
+.nav-cta:after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  transform: translateX(-120%) skewX(-18deg);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.25),
+    transparent
+  );
+  transition: transform 0.55s ease;
+}
+
+.home-actions a:hover:after,
+.performance-copy > a:hover:after,
+.manifesto > a:hover:after,
+.table-row a:hover:after,
+.card-action:hover:after,
+.buy-btn:hover:after,
+.form-grid button:hover:after,
+.nav-cta:hover:after {
+  transform: translateX(120%) skewX(-18deg);
+}
+
+.home-actions a:hover,
+.performance-copy > a:hover,
+.manifesto > a:hover,
+.table-row a:hover,
+.card-action:hover,
+.buy-btn:hover,
+.form-grid button:hover,
+.nav-cta:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 32px rgba(214, 255, 60, 0.11);
+}
+
+/* HOME HERO */
+.home-hero {
+  min-height: calc(100vh - 74px);
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  grid-template-rows: 1fr auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.energy-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.5;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+.home-copy {
+  position: relative;
+  z-index: 2;
+  align-self: center;
+  padding: 8vh 4vw 8vh 7vw;
+}
+
+.hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  font-size: 7px;
+  letter-spacing: 0.15em;
+  color: #656c64;
+  margin-left: 4px;
+}
+
+.hero-meta i {
+  width: 42px;
+  height: 1px;
+  background: #51564f;
+}
+
+.home-copy h1 {
+  font-family: var(--display);
+  font-size: clamp(74px, 8.2vw, 126px);
+  line-height: 0.7;
+  text-transform: uppercase;
+  letter-spacing: -0.045em;
+  margin: 7vh 0 0;
+  font-weight: 800;
+}
+
+.home-copy h1 span,
+.home-copy h1 em {
+  display: block;
+}
+
+.home-copy h1 em {
+  font-style: normal;
+  color: var(--red);
+  font-weight: 500;
+  padding-left: 0;
+}
+
+.home-copy > p {
+  max-width: 610px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #9da198;
+  margin: 7vh 0 0;
+}
+
+.home-actions {
+  margin: 34px 0 0;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.home-actions a {
+  font-size: 8px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  border: 1px solid #353b34;
+  padding: 12px 14px;
+}
+
+.home-actions .primary {
+  background: var(--volt);
+  border-color: var(--volt);
+  color: #090a08;
+  display: flex;
+  gap: 28px;
+}
+
+.home-media {
+  position: relative;
+  z-index: 3;
+  margin: 4vh 3vw 4vh 0;
+  min-height: 680px;
+  transform-style: preserve-3d;
+  display: grid;
+  place-items: center;
+}
+
+.home-media:before {
+  content: "";
+  position: absolute;
+  inset: 7% 2% 4% 7%;
+  background:
+    radial-gradient(
+      circle at 60% 40%,
+      rgba(255, 59, 31, 0.15),
+      transparent 46%
+    ),
+    linear-gradient(135deg, rgba(214, 255, 60, 0.08), transparent 44%);
+  clip-path: polygon(7% 0, 100% 0, 93% 100%, 0 91%);
+  border: 1px solid rgba(232, 227, 215, 0.12);
+}
+
+.home-media img {
+  width: 88%;
+  height: 88%;
+  object-fit: cover;
+  display: block;
+  filter: saturate(0.48) contrast(1.12) brightness(0.72);
+  clip-path: polygon(8% 0, 100% 0, 94% 92%, 0 100%);
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    #000 8%,
+    #000 94%,
+    transparent 100%
+  );
+  transition:
+    clip-path 0.5s ease,
+    filter 0.5s ease;
+}
+
+.home-media:hover img {
+  clip-path: polygon(3% 3%, 97% 0, 100% 96%, 0 100%);
+  filter: saturate(0.58) contrast(1.15) brightness(0.8);
+}
+
+.home-media:after {
+  content: "";
+  position: absolute;
+  inset: 8% 5% 7% 8%;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(8, 9, 7, 0.38), transparent 25%),
+    linear-gradient(0deg, rgba(255, 59, 31, 0.13), transparent 42%);
+  clip-path: polygon(8% 0, 100% 0, 94% 92%, 0 100%);
+}
+
+.media-scan {
+  position: absolute;
+  z-index: 2;
+  left: 7%;
+  right: 5%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--red), transparent);
+  box-shadow: 0 0 17px rgba(255, 59, 31, 0.5);
+  animation: scan 5s ease-in-out infinite;
+}
+
+@keyframes scan {
+  0%,
+  100% {
+    top: 16%;
+    opacity: 0.2;
+  }
+
+  50% {
+    top: 82%;
+    opacity: 0.9;
+  }
+}
+
+.hero-telemetry {
+  grid-column: 1/-1;
+  position: relative;
+  z-index: 4;
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  padding: 11px 3vw;
+  font-size: 7px;
+  letter-spacing: 0.14em;
+  color: #626861;
+}
+
+/* programs stage home */
+.program-stage {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 5vw;
+  align-items: center;
+}
+
+.program-list {
+  border-top: 1px solid var(--line);
+}
+
+.program-row {
+  display: grid;
+  grid-template-columns: 38px 1fr 74px 20px;
+  gap: 16px;
+  align-items: center;
+
+  padding: 20px 0;
+
+  border-bottom: 1px solid var(--line);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+/* GREEN BACKGROUND */
+
+.program-row::before {
+  content: "";
+  position: absolute;
+  inset: 3px 0;
+  background: linear-gradient(90deg, var(--volt), rgba(214, 255, 60, 0.88));
+
+  transform: scaleX(0);
+  transform-origin: left center;
+
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+
+  z-index: -1;
+}
+
+/* NORMAL TEXT COLORS */
+
+.program-row > span {
+  font-family: var(--display);
+  font-size: 16px;
+  color: var(--red);
+
+  transition: color 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.program-row h3 {
+  font-family: var(--display);
+  font-size: 30px;
+  text-transform: uppercase;
+  margin: 0;
+
+  color: var(--bone);
+
+  transition: color 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.program-row p {
+  font-size: 8px;
+  letter-spacing: 0.06em;
+  color: #777d75;
+  margin: 4px 0 0;
+
+  transition: color 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.program-row > b {
+  font-size: 7px;
+  letter-spacing: 0.1em;
+  font-weight: 500;
+
+  color: var(--bone);
+
+  transition: color 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.program-row > i {
+  font-style: normal;
+  font-size: 15px;
+
+  color: var(--bone);
+
+  transition: color 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.program-row > span,
+.program-row > div,
+.program-row > b,
+.program-row > i {
+  transform: translateX(0);
+  transition:
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.45s ease;
+
+  will-change: transform;
+}
+
+.program-row:hover > span,
+.program-row:hover > div,
+.program-row:hover > b,
+.program-row:hover > i,
+.program-row.active > span,
+.program-row.active > div,
+.program-row.active > b,
+.program-row.active > i {
+  transform: translateX(14px);
+}
+
+/* GREEN ENTER / EXIT */
+
+.program-row:hover::before,
+.program-row.active::before {
+  transform: scaleX(1);
+}
+
+/* HOVER TEXT COLORS */
+
+.program-row:hover > span,
+.program-row.active > span {
+  color: #080907;
+}
+
+.program-row:hover h3,
+.program-row.active h3 {
+  color: #080907;
+}
+
+.program-row:hover p,
+.program-row.active p {
+  color: #3c433a;
+}
+
+.program-row:hover > b,
+.program-row.active > b {
+  color: #080907;
+}
+
+.program-row:hover > i,
+.program-row.active > i {
+  color: #080907;
+}
+
+.program-preview {
+  height: 520px;
+  margin: 0;
+  position: relative;
+  overflow: hidden;
+  align-self: center;
+  clip-path: polygon(5% 0, 100% 0, 96% 100%, 0 100%);
+  background: #080907;
+}
+
+.program-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: saturate(0.46) contrast(1.12);
+  transition:
+    opacity 0.5s ease,
+    transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1),
+    filter 0.5s;
+}
+
+.program-preview.swap img {
+  opacity: 0;
+  transform: scale(1.06) translateX(2%);
+  filter: saturate(0.1) brightness(0.55);
+}
+
+.program-preview figcaption {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  background: rgba(8, 9, 7, 0.72);
+  backdrop-filter: blur(12px);
+  padding: 12px;
+  border: 1px solid rgba(232, 227, 215, 0.12);
+  font-size: 7px;
+  letter-spacing: 0.12em;
+}
+
+.program-preview figcaption b {
+  color: var(--volt);
+}
+
+/* practical performance model */
+.performance-band {
+  display: grid;
+  grid-template-columns: 0.82fr 1.18fr;
+  gap: 7vw;
+  align-items: center;
+  background:
+    linear-gradient(rgba(10, 12, 9, 0.94), rgba(10, 12, 9, 0.96)),
+    url("assets/forge-performance.webp") center/cover;
+  border: 1px solid var(--line);
+  padding: 90px 5vw;
+  position: relative;
+  overflow: hidden;
+}
+
+.performance-band:before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      circle at 78% 35%,
+      rgba(255, 59, 31, 0.06),
+      transparent 35%
+    ),
+    linear-gradient(135deg, transparent 45%, rgba(214, 255, 60, 0.025));
+}
+
+.performance-copy {
+  position: relative;
+}
+
+.performance-copy h2 {
+  font-family: var(--display);
+  font-size: clamp(54px, 6vw, 88px);
+  line-height: 0.82;
+  text-transform: uppercase;
+  margin: 24px 0;
+}
+
+.performance-copy h2 em {
+  font-style: normal;
+  color: var(--red);
+  font-weight: 500;
+}
+
+.performance-copy p {
+  font-size: 12px;
+  line-height: 1.8;
+  color: #8a9087;
+  max-width: 560px;
+}
+
+.performance-copy > a {
+  display: inline-flex;
+  margin-top: 25px;
+  padding: 12px 14px;
+  border: 1px solid #3b423a;
+  font-size: 8px;
+  letter-spacing: 0.12em;
+}
+
+.recovery-model {
+  position: relative;
+  border: 1px solid #272d26;
+  padding: 24px;
+  min-height: 490px;
+  background: linear-gradient(180deg, #10130f, #090b08);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.recovery-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.recovery-top span {
+  font-size: 7px;
+  letter-spacing: 0.14em;
+  color: #80877e;
+}
+
+.recovery-top b {
+  font: 500 8px var(--sans);
+  letter-spacing: 0.12em;
+  color: var(--volt);
+}
+
+.recovery-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.recovery-step {
+  position: relative;
+  border: 1px solid #262c25;
+  padding: 18px 14px 16px;
+  min-height: 230px;
+  background: #0d100c;
+  transition:
+    transform 0.35s,
+    border-color 0.35s;
+}
+
+.recovery-step:hover {
+  transform: translateY(-5px);
+  border-color: rgba(214, 255, 60, 0.34);
+}
+
+.recovery-step:after {
+  content: "→";
+  position: absolute;
+  right: -12px;
+  top: 50%;
+  z-index: 3;
+  color: var(--red);
+  font-size: 18px;
+}
+
+.recovery-step:last-child:after {
+  display: none;
+}
+
+.recovery-step .step-num {
+  font: 700 13px var(--display);
+  color: var(--red);
+}
+
+.recovery-step h3 {
+  font: 700 28px var(--display);
+  text-transform: uppercase;
+  margin: 34px 0 10px;
+}
+
+.recovery-step p {
+  font-size: 9px;
+  line-height: 1.55;
+  color: #81877f;
+  margin: 0;
+}
+
+.recovery-meter {
+  height: 6px;
+  background: #20251f;
+  margin-top: 24px;
+  overflow: hidden;
+}
+
+.recovery-meter i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--red), var(--volt));
+  width: var(--level);
+}
+
+.recovery-note {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px;
+  align-items: end;
+  border-top: 1px solid #262c25;
+  margin-top: 22px;
+  padding-top: 16px;
+  font-size: 8px;
+  line-height: 1.5;
+  color: #6f766d;
+}
+
+.recovery-note span {
+  padding-bottom: 3px;
+}
+
+.recovery-note b {
+  font: 700 25px var(--display);
+  color: var(--volt);
+}
+
+/* coaches + manifesto */
+.coach-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.8fr 1fr;
+  gap: 16px;
+}
+
+.coach {
+  height: 560px;
+  position: relative;
+  overflow: hidden;
+}
+
+.coach.offset {
+  height: 500px;
+  margin-top: 60px;
+}
+
+.coach img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: saturate(0.38) contrast(1.12);
+  transition:
+    transform 0.7s,
+    filter 0.4s;
+}
+
+.coach:hover img {
+  transform: scale(1.035);
+  filter: saturate(0.65);
+}
+
+.coach:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(8, 9, 7, 0.78), transparent 50%);
+}
+
+.coach > div {
+  position: absolute;
+  z-index: 2;
+  left: 18px;
+  right: 18px;
+  bottom: 16px;
+}
+
+.coach > div span {
+  font-family: var(--display);
+  color: var(--red);
+}
+
+.coach h3 {
+  font-family: var(--display);
+  font-size: 42px;
+  text-transform: uppercase;
+  margin: 2px 0;
+}
+
+.coach p {
+  font-size: 8px;
+  letter-spacing: 0.09em;
+  color: #a3a79f;
+  margin: 0;
+}
+
+.manifesto {
+  min-height: 66vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  background: #050604;
+  padding: 70px 5vw;
+}
+
+.manifesto-ring {
+  position: absolute;
+  width: min(54vw, 640px);
+  aspect-ratio: 1;
+  border: 1px solid rgba(214, 255, 60, 0.13);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+}
+
+.manifesto-ring:before,
+.manifesto-ring i {
+  content: "";
+  position: absolute;
+  width: 72%;
+  height: 72%;
+  border: 1px dashed rgba(255, 59, 31, 0.16);
+  border-radius: 50%;
+  animation: spin 22s linear infinite;
+}
+
+.manifesto-ring i {
+  width: 43%;
+  height: 43%;
+  border-style: solid;
+  border-color: rgba(232, 227, 215, 0.1);
+  animation-direction: reverse;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.manifesto h2 {
+  position: relative;
+  font-family: var(--display);
+  font-size: clamp(58px, 6.8vw, 98px);
+  line-height: 0.76;
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  margin: 27px 0;
+}
+
+.manifesto h2 em {
+  font-style: normal;
+  color: var(--volt);
+  font-weight: 500;
+}
+
+.manifesto > a {
+  position: relative;
+  background: var(--red);
+  color: #090a08;
+  padding: 13px 16px;
+  font-size: 8px;
+  letter-spacing: 0.13em;
+}
+
+/* page heroes */
+.page-hero {
+  min-height: 620px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+  background: #070806;
+}
+
+.page-hero.compact {
+  min-height: 520px;
+}
+
+.page-hero > .energy-canvas {
+  opacity: 0.42;
+}
+
+.page-hero-copy {
+  position: relative;
+  z-index: 2;
+  padding: 90px 7vw 68px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.page-hero-copy .micro {
+  margin-bottom: 25px;
+}
+
+.page-hero-copy .hero-micro-align {
+  margin-left: 4px;
+}
+
+.page-hero h1 {
+  font-family: var(--display);
+  font-size: clamp(62px, 7vw, 106px);
+  line-height: 0.75;
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  margin: 0;
+}
+
+.page-hero h1 em {
+  font-style: normal;
+  color: var(--red);
+  font-weight: 500;
+}
+
+.page-hero-copy p {
+  font-size: 13px;
+  line-height: 1.7;
+  color: #91978e;
+  max-width: 540px;
+  margin: 35px 0 0;
+}
+
+.page-hero-media {
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+  margin: 34px 3vw 34px 0;
+  clip-path: polygon(7% 0, 100% 0, 93% 100%, 0 91%);
+  background: #0b0d0a;
+}
+
+.page-hero-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: saturate(0.45) contrast(1.12) brightness(0.76);
+  transition:
+    transform 0.65s,
+    filter 0.5s;
+}
+
+.page-hero-media:hover img {
+  transform: scale(1.025);
+  filter: saturate(0.58) contrast(1.12) brightness(0.82);
+}
+
+.page-hero-media:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(8, 9, 7, 0.45), transparent 35%),
+    linear-gradient(0deg, rgba(255, 59, 31, 0.08), transparent 42%);
+}
+
+.page-hero-media.contain-media {
+  clip-path: none;
+  display: grid;
+  place-items: center;
+  background: transparent;
+}
+
+.page-hero-media.contain-media::after {
+  display: none;
+}
+
+.page-hero-media.contain-media img {
+  width: 84%;
+  height: 86%;
+  object-fit: contain;
+  mix-blend-mode: normal;
+  filter: none;
+  border-radius: 0;
+}
+
+.page-hero-media.rope-media img {
+  object-position: 72% center;
+}
+
+.page-hero-media.coach-media img {
+  object-position: center 30%;
+}
+
+/* generic content cards */
+.content-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 18px;
+}
+
+.info-block {
+  grid-column: span 6;
+  border: 1px solid var(--line);
+  padding: 0 0 30px;
+  background: #0b0d0a;
+  overflow: hidden;
+  transition:
+    transform 0.35s,
+    border-color 0.35s,
+    background 0.35s;
+}
+
+.info-block.wide {
+  grid-column: span 6;
+}
+
+.info-block.narrow {
+  grid-column: span 6;
+}
+
+.info-block:hover {
+  transform: translateY(-7px);
+  border-color: rgba(214, 255, 60, 0.3);
+  background: #0e110d;
+}
+
+.info-block .num {
+  display: block;
+  padding: 20px 22px 0;
+  font-family: var(--display);
+  color: var(--red);
+}
+
+.info-block h3 {
+  font-family: var(--display);
+  font-size: 38px;
+  text-transform: uppercase;
+  margin: 12px 22px;
+}
+
+.info-block p {
+  font-size: 11px;
+  line-height: 1.75;
+  color: #8a9088;
+  margin: 0 22px;
+  max-width: 600px;
+}
+
+.info-image {
+  height: 320px;
+  overflow: hidden;
+}
+
+.info-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 25%;
+  filter: saturate(0.48);
+  transition:
+    transform 0.7s,
+    filter 0.4s;
+}
+
+.info-block:hover .info-image img {
+  transform: scale(1.035);
+  filter: saturate(0.7);
+}
+
+.card-action {
+  display: inline-flex;
+  margin: 22px 22px 0;
+  padding: 10px 12px;
+  border: 1px solid #3b423a;
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.overview-card .card-action {
+  margin: 22px 0 0;
+}
+
+.clickable-card {
+  cursor: pointer;
+}
+
+/* program overview redesigned */
+.overview-section {
+  padding-top: 90px;
+}
+
+.program-overview {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.overview-card {
+  border: 1px solid var(--line);
+  padding: 28px;
+  min-height: 235px;
+  background: linear-gradient(145deg, #0f120e, #090b08);
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 0.35s,
+    border-color 0.35s;
+}
+
+.overview-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(214, 255, 60, 0.34);
+}
+
+.overview-card:before {
+  content: "";
+  position: absolute;
+  right: -80px;
+  top: -80px;
+  width: 210px;
+  height: 210px;
+  border: 1px solid rgba(255, 59, 31, 0.15);
+  border-radius: 50%;
+}
+
+.overview-card header {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: flex-start;
+}
+
+.overview-card h3 {
+  font: 800 34px var(--display);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.overview-card strong {
+  font: 700 26px var(--display);
+  color: var(--volt);
+}
+
+.overview-card p {
+  max-width: 520px;
+  font-size: 10px;
+  line-height: 1.7;
+  color: #858b83;
+}
+
+.overview-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 28px;
+}
+
+.overview-tags span {
+  font-size: 7px;
+  letter-spacing: 0.11em;
+  border: 1px solid #30372f;
+  padding: 7px 9px;
+  color: #858c82;
+  text-transform: uppercase;
+}
+
+/* nutrition framework with all images */
+.framework-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.framework-card {
+  min-height: 470px;
+  border: 1px solid var(--line);
+  position: relative;
+  overflow: hidden;
+  background: #0a0c09;
+}
+
+.framework-card img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  filter: saturate(0.72) brightness(0.82) contrast(1.05);
+
+  transition:
+    transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1),
+    filter 0.5s ease;
+}
+
+.framework-card:hover img {
+  transform: scale(1.04);
+
+  filter: saturate(0.85) brightness(0.9) contrast(1.07);
+}
+
+.framework-card:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    0deg,
+    rgba(4, 5, 4, 0.9) 4%,
+    rgba(4, 5, 4, 0.3) 55%,
+    rgba(4, 5, 4, 0.05) 100%
+  );
+}
+
+.framework-card > div {
+  position: absolute;
+  z-index: 2;
+  left: 28px;
+  right: 28px;
+  bottom: 26px;
+}
+
+.framework-card .num {
+  font: 700 15px var(--display);
+  color: var(--red);
+}
+
+.framework-card h3 {
+  font: 800 38px var(--display);
+  text-transform: uppercase;
+  margin: 10px 0;
+}
+
+.framework-card p {
+  font-size: 10px;
+  line-height: 1.65;
+  color: #a3a89f;
+  max-width: 560px;
+}
+
+/* coach page */
+.coach-card .info-image {
+  height: 410px;
+}
+
+.coach-card .info-image img {
+  object-position: center top;
+}
+
+.coach-card .card-action {
+  background: var(--volt);
+  color: #080907;
+  border-color: var(--volt);
+  font-weight: 700;
+}
+
+.coach-principle {
+  background-image:
+    linear-gradient(rgba(5, 6, 4, 0.82), rgba(5, 6, 4, 0.94)),
+    url("assets/why.webp");
+  background-size: cover;
+  background-position: center;
+}
+
+/* fuel */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.product-card {
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, #0e110d, #090b08);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  min-height: 590px;
+  transition:
+    transform 0.35s,
+    border-color 0.35s;
+}
+
+.product-card:hover {
+  transform: translateY(-7px);
+  border-color: rgba(214, 255, 60, 0.35);
+}
+
+.product-visual {
+  height: 310px;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(
+    circle at 50% 45%,
+    rgba(255, 59, 31, 0.07),
+    transparent 56%
+  );
+  overflow: hidden;
+  position: relative;
+}
+
+.product-visual:after {
+  content: "";
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  bottom: 12px;
+  height: 26px;
+  background: rgba(0, 0, 0, 0.55);
+  filter: blur(16px);
+  border-radius: 50%;
+}
+
+.product-visual img {
+  position: relative;
+  z-index: 2;
+  width: 88%;
+  height: 88%;
+  object-fit: contain;
+
+  mix-blend-mode: normal;
+
+  filter: brightness(0.92) contrast(1.06) saturate(0.95);
+
+  transition:
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.4s ease;
+}
+
+.product-card:hover .product-visual img {
+  transform: scale(1.055);
+
+  filter: brightness(1) contrast(1.07) saturate(1);
+}
+
+.product-card h3 {
+  font: 800 34px var(--display);
+  text-transform: uppercase;
+  margin: 20px 0 8px;
+}
+
+.product-card p {
+  font-size: 9px;
+  line-height: 1.65;
+  color: #858c83;
+  margin: 0 0 20px;
+}
+
+.product-price {
+  font: 700 28px var(--display);
+  color: var(--volt);
+  margin-top: auto;
+}
+
+.product-price small {
+  font: 500 8px var(--sans);
+  color: #72796f;
+  letter-spacing: 0.12em;
+}
+
+.buy-btn {
+  margin-top: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--red);
+  color: #080907;
+  padding: 11px 12px;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.fuel-extra {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 18px;
+  margin-top: 72px;
+}
+
+.fuel-extra article {
+  border: 1px solid var(--line);
+  min-height: 430px;
+  padding: 34px;
+  position: relative;
+  overflow: hidden;
+  background: #0b0d0a;
+}
+
+.fuel-extra article.visual {
+  padding: 0;
+}
+
+.fuel-extra article.visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.45) brightness(0.65);
+}
+
+.fuel-extra h3 {
+  font: 800 52px/0.9 var(--display);
+  text-transform: uppercase;
+  margin: 18px 0;
+}
+
+.fuel-extra p {
+  font-size: 11px;
+  line-height: 1.8;
+  color: #858b83;
+  max-width: 560px;
+}
+
+.fuel-checks {
+  display: grid;
+  gap: 12px;
+  margin-top: 34px;
+}
+
+.fuel-checks span {
+  border-top: 1px solid #2a3029;
+  padding-top: 12px;
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  color: #8b9188;
+}
+
+/* forms, faq, legal */
+.form-section {
+  display: grid;
+  grid-template-columns: 0.75fr 1.25fr;
+  gap: 8vw;
+  position: relative;
+  background:
+    linear-gradient(90deg, rgba(8, 9, 7, 0.96), rgba(8, 9, 7, 0.92)),
+    url("assets/contact-rope.webp") center/cover;
+  background-attachment: fixed;
+}
+
+.form-intro h2 {
+  font-family: var(--display);
+  font-size: clamp(50px, 5.5vw, 82px);
+  line-height: 0.8;
+  text-transform: uppercase;
+  margin: 20px 0 28px;
+}
+
+.form-intro h2 em {
+  font-style: normal;
+  color: var(--red);
+}
+
+.form-intro p {
+  font-size: 12px;
+  line-height: 1.7;
+  color: #81877f;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px 30px;
+}
+
+.form-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.form-grid label span {
+  font-size: 7px;
+  letter-spacing: 0.13em;
+  color: #6e756d;
+  text-transform: uppercase;
+}
+
+.form-grid input,
+.form-grid select,
+.form-grid textarea {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #3b423a;
+  color: var(--bone);
+  padding: 10px 0;
+  outline: none;
+  border-radius: 0;
+}
+
+.form-grid option {
+  background: #0e100d;
+}
+
+.form-grid .wide {
+  grid-column: 1/-1;
+}
+
+.form-grid button {
+  grid-column: 1/-1;
+  justify-self: start;
+  background: var(--volt);
+  color: #090a08;
+  border: 0;
+  padding: 12px 16px;
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+}
+
+.form-note {
+  grid-column: 1/-1;
+  font-size: 8px !important;
+  color: #636a62 !important;
+  margin-top: -10px;
+}
+
+.fuel-product-note {
+  margin-top: 18px;
+}
+
+.faq-list {
+  max-width: 1020px;
+  margin: 0 auto;
+  border-top: 1px solid var(--line);
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--line);
+}
+
+.faq-item button {
+  width: 100%;
+  background: none;
+  border: 0;
+  color: var(--bone);
+  display: flex;
+  justify-content: space-between;
+  padding: 21px 0 10px;
+  text-align: left;
+  font-family: var(--display);
+  font-size: 26px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.faq-answer {
+  display: grid;
+  grid-template-rows: 0fr;
+
+  transition: grid-template-rows 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.faq-answer p {
+  min-height: 0;
+  overflow: hidden;
+
+  font-size: 11px;
+  line-height: 1.7;
+  color: #7f867e;
+  margin: 0;
+  max-width: 760px;
+
+  opacity: 0;
+  transform: translateY(-8px);
+  padding-bottom: 0;
+
+  transition:
+    opacity 0.35s ease,
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    padding-bottom 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.faq-item.open .faq-answer {
+  grid-template-rows: 1fr;
+}
+
+.faq-item.open .faq-answer p {
+  opacity: 1;
+  transform: translateY(0);
+  padding-bottom: 22px;
+}
+
+.faq-item button span:last-child {
+  color: var(--volt);
+  display: inline-block;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.faq-item.open button span:last-child {
+  transform: rotate(45deg);
+}
+
+.legal {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.legal section {
+  border-top: 1px solid var(--line);
+  padding: 27px 0;
+}
+
+.legal h2 {
+  font-family: var(--display);
+  font-size: 34px;
+  text-transform: uppercase;
+  margin: 0 0 12px;
+}
+
+.legal p {
+  font-size: 11px;
+  line-height: 1.8;
+  color: #80867f;
+}
+
+.nutrition-rule-band {
+  margin-bottom: 80px;
+}
+
+.footer {
+  position: relative;
+  z-index: 2;
+  border-top: 1px solid var(--line);
+  padding: 40px 3vw 32px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 25px;
+  align-items: center;
+}
+
+.footer > .logo {
+  align-self: center;
+}
+
+.footer-nav {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer-nav a,
+.footer-meta {
+  font-size: 7px;
+  letter-spacing: 0.12em;
+  color: #6a7169;
+  text-transform: uppercase;
+}
+
+.footer-meta {
+  justify-self: end;
+  align-self: center;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.78s,
+    transform 0.78s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.reveal.in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (max-width: 1100px) {
+  .section {
+    padding: 95px 6vw;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .program-stage {
+    grid-template-columns: 1fr;
+  }
+
+  .program-preview {
+    height: 600px;
+  }
+
+  .fuel-extra {
+    grid-template-columns: 1fr;
+  }
+
+  .page-hero-media.contain-media img {
+    width: 72%;
+    height: 86%;
+  }
+}
+
+@media (max-width: 1020px) {
+  .site-nav {
+    grid-template-columns: 1fr auto;
+  }
+
+  .site-nav nav,
+  .nav-tools {
+    display: none;
+  }
+
+  .menu-btn {
+    display: block;
+  }
+
+  .home-hero {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+  }
+
+  .home-copy {
+    padding-top: 11vh;
+  }
+
+  .home-media {
+    min-height: 650px;
+    margin: 0 7vw 7vh;
+  }
+
+  .performance-band {
+    grid-template-columns: 1fr;
+  }
+
+  .coach-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .coach:nth-child(3) {
+    grid-column: 1/-1;
+  }
+
+  .page-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .page-hero-media {
+    min-height: 500px;
+    margin: 0 7vw 60px;
+  }
+
+  .form-section {
+    grid-template-columns: 1fr;
+  }
+
+  .framework-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .info-block,
+  .info-block.wide,
+  .info-block.narrow {
+    grid-column: auto;
+  }
+
+  .program-overview {
+    grid-template-columns: 1fr;
+  }
+
+  .page-hero-media.contain-media img {
+    width: 62%;
+    height: 88%;
+  }
+}
+
+@media (max-width: 680px) {
+  .nutrition-rule-band {
+    margin-bottom: 60px;
+  }
+
+  .section {
+    padding: 72px 5vw;
+  }
+
+  .forge-cursor,
+  .forge-particles {
+    display: none;
+  }
+
+  .site-nav {
+    height: 64px;
+    padding: 0 18px;
+  }
+
+  .logo small {
+    display: none;
+  }
+
+  .page-shell {
+    padding-top: 64px;
+  }
+
+  .home-copy {
+    padding: 70px 18px 60px;
+  }
+
+  .hero-meta span:last-child,
+  .hero-meta i {
+    display: none;
+  }
+
+  .home-copy h1 {
+    font-size: clamp(62px, 20vw, 88px);
+  }
+
+  .home-copy > p,
+  .home-actions {
+    margin-left: 0;
+  }
+
+  .home-actions {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .home-media {
+    min-height: 500px;
+    margin: 0 18px 50px;
+  }
+
+  .hero-telemetry {
+    padding: 10px 18px;
+  }
+
+  .hero-telemetry span:nth-child(2) {
+    display: none;
+  }
+
+  .section-head {
+    margin-bottom: 52px;
+  }
+
+  .section-head h2 {
+    font-size: 52px;
+  }
+
+  .program-row {
+    grid-template-columns: 30px 1fr 20px;
+  }
+
+  .program-row > b {
+    display: none;
+  }
+
+  .program-row h3 {
+    font-size: 27px;
+  }
+
+  .program-preview {
+    height: 430px;
+  }
+
+  .performance-band {
+    margin: 0;
+    padding: 78px 18px;
+  }
+
+  .performance-copy h2 {
+    font-size: 56px;
+  }
+
+  .recovery-steps {
+    grid-template-columns: 1fr;
+  }
+
+  .recovery-step:after {
+    content: "↓";
+    right: 50%;
+    top: auto;
+    bottom: -15px;
+  }
+
+  .coach-grid {
+    display: block;
+  }
+
+  .coach,
+  .coach.offset {
+    height: 470px;
+    margin: 0 0 14px;
+  }
+
+  .manifesto {
+    min-height: 56vh;
+  }
+
+  .manifesto h2 {
+    font-size: 55px;
+  }
+
+  .page-hero,
+  .page-hero.compact {
+    min-height: auto;
+  }
+
+  .page-hero-copy {
+    padding: 72px 18px 50px;
+  }
+
+  .page-hero h1 {
+    font-size: 58px;
+  }
+
+  .page-hero-media {
+    min-height: 380px;
+    margin: 0 18px 40px;
+  }
+
+  .page-hero-media.contain-media img {
+    width: 78%;
+    height: 88%;
+  }
+
+  .framework-card {
+    min-height: 420px;
+  }
+
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .product-card {
+    min-height: 540px;
+  }
+
+  .fuel-extra article {
+    min-height: 380px;
+    padding: 26px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-grid .wide,
+  .form-grid button,
+  .form-note {
+    grid-column: 1;
+  }
+
+  .footer {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 30px 18px;
+  }
+
+  .footer-nav {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .footer-meta {
+    justify-self: start;
+  }
+
+  .media-scan,
+  .manifesto-ring:before,
+  .manifesto-ring i {
+    animation: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .media-scan,
+  .manifesto-ring:before,
+  .manifesto-ring i {
+    animation: none;
+  }
+
+  .forge-cursor,
+  .forge-particles {
+    display: none;
+  }
+}
+
+/* =========================================================
+   FINAL RESPONSIVE PASS
+   NAV / HOME HERO / TRAINING SYSTEMS
+   ========================================================= */
+
+/* ---------- LARGE + NORMAL DESKTOP ---------- */
+
+@media (min-width: 1021px) {
+  /* Stop the hero becoming gigantic on tall / 4K screens */
+  .home-hero {
+    min-height: 680px;
+    height: clamp(680px, calc(100vh - 74px), 860px);
+  }
+
+  .home-copy {
+    padding: clamp(58px, 7vh, 86px) 4vw clamp(58px, 7vh, 86px) 7vw;
+  }
+
+  .home-copy h1 {
+    margin-top: clamp(42px, 5vh, 64px);
+  }
+
+  .home-copy > p {
+    margin-top: clamp(30px, 4vh, 48px);
+  }
+
+  .home-media {
+    min-height: 0;
+    height: clamp(560px, 72vh, 680px);
+    margin: 30px 3vw 30px 0;
+  }
+}
+
+/* ---------- LAPTOP 1024–1180 ---------- */
+/* Keep Training Systems side-by-side */
+
+@media (min-width: 1021px) and (max-width: 1180px) {
+  .program-stage {
+    grid-template-columns: minmax(0, 1.12fr) minmax(320px, 0.88fr);
+    gap: 3vw;
+    align-items: center;
+  }
+
+  .program-preview {
+    display: block;
+    height: 470px;
+  }
+
+  .program-row {
+    grid-template-columns: 34px 1fr 62px 18px;
+    gap: 12px;
+  }
+
+  .program-row h3 {
+    font-size: 27px;
+  }
+}
+
+/* ---------- TABLET + MOBILE ---------- */
+
+@media (max-width: 1020px) {
+  /* =========================
+       HOME HERO
+       Image becomes part of hero,
+       not a separate block underneath
+       ========================= */
+
+  .home-hero {
+    height: auto;
+    min-height: 680px;
+
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
+  }
+
+  .home-copy {
+    position: relative;
+    z-index: 3;
+
+    min-height: 630px;
+
+    padding: 90px 7vw 100px;
+  }
+
+  .home-media {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+
+    margin: 0;
+
+    opacity: 0.42;
+
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .home-media img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    object-position: 64% center;
+
+    clip-path: none;
+    mask-image: none;
+  }
+
+  .home-media::before,
+  .home-media::after,
+  .media-scan {
+    display: none;
+  }
+
+  .home-hero::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    z-index: 2;
+    pointer-events: none;
+
+    background:
+      linear-gradient(
+        90deg,
+        rgba(8, 9, 7, 0.96) 0%,
+        rgba(8, 9, 7, 0.82) 42%,
+        rgba(8, 9, 7, 0.38) 100%
+      ),
+      linear-gradient(0deg, rgba(8, 9, 7, 0.88) 0%, transparent 52%);
+  }
+
+  .hero-telemetry {
+    position: relative;
+    z-index: 4;
+  }
+
+  /* =========================
+       TRAINING SYSTEMS
+       No pointless hover preview
+       on touch-sized screens
+       ========================= */
+
+  .program-stage {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .program-preview {
+    display: none;
+  }
+
+  /* Remove desktop "selected" state */
+  .program-row.active::before {
+    transform: scaleX(0);
+  }
+
+  .program-row.active > span,
+  .program-row.active > div,
+  .program-row.active > b,
+  .program-row.active > i {
+    transform: none;
+  }
+
+  .program-row.active > span {
+    color: var(--red);
+  }
+
+  .program-row.active h3 {
+    color: var(--bone);
+  }
+
+  .program-row.active p {
+    color: #777d75;
+  }
+
+  .program-row.active > b,
+  .program-row.active > i {
+    color: var(--bone);
+  }
+}
+
+/* ---------- SMALL PHONES ---------- */
+
+@media (max-width: 680px) {
+  .site-nav.mobile-open {
+    min-height: 64px;
+    padding: 0 18px;
+  }
+
+  .site-nav.mobile-open nav {
+    gap: 0 18px;
+    padding-top: 14px;
+  }
+
+  .site-nav.mobile-open nav a {
+    font-size: 10px;
+    padding: 10px 0;
+  }
+
+  /* More compact mobile hero */
+  .home-hero {
+    min-height: 640px;
+  }
+
+  .home-copy {
+    min-height: 590px;
+    padding: 76px 18px 88px;
+  }
+
+  .home-media {
+    opacity: 0.36;
+  }
+
+  .home-media img {
+    object-position: 66% center;
+  }
+
+  .home-hero::after {
+    background:
+      linear-gradient(
+        90deg,
+        rgba(8, 9, 7, 0.97) 0%,
+        rgba(8, 9, 7, 0.84) 58%,
+        rgba(8, 9, 7, 0.48) 100%
+      ),
+      linear-gradient(0deg, rgba(8, 9, 7, 0.9) 0%, transparent 54%);
+  }
+}
+
+/* Touch devices should never depend on hover */
+
+@media (hover: none), (pointer: coarse) {
+  .program-row:hover::before {
+    transform: scaleX(0);
+  }
+
+  .program-row:hover > span,
+  .program-row:hover > div,
+  .program-row:hover > b,
+  .program-row:hover > i {
+    transform: none;
+  }
+
+  .program-row:hover > span {
+    color: var(--red);
+  }
+
+  .program-row:hover h3 {
+    color: var(--bone);
+  }
+
+  .program-row:hover p {
+    color: #777d75;
+  }
+
+  .program-row:hover > b,
+  .program-row:hover > i {
+    color: var(--bone);
+  }
+
+  /* short physical tap feedback instead */
+  .program-row:active::before {
+    transform: scaleX(1);
+  }
+
+  .program-row:active > span,
+  .program-row:active h3,
+  .program-row:active > b,
+  .program-row:active > i {
+    color: #080907;
+  }
+
+  .program-row:active p {
+    color: #3c433a;
+  }
+}
+
+@media (min-width: 1021px) {
+  .home-principle {
+    min-height: clamp(500px, 56vh, 640px);
+    padding: 64px 5vw;
+  }
+}
+
+/* Large-screen coach image protection */
+@media (min-width: 1700px) {
+  .coaches .coach-grid {
+    max-width: 1900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .coaches .coach {
+    height: 680px;
+  }
+
+  .coaches .coach.offset {
+    height: 620px;
+    margin-top: 60px;
+  }
+
+  .coaches .coach img {
+    object-position: center 22%;
+  }
+}
+
+@media (min-width: 681px) and (max-width: 1020px) {
+  .coaches .coach:nth-child(3) {
+    height: 640px;
+  }
+
+  .coaches .coach:nth-child(3) img {
+    object-position: center 15%;
+  }
+}
+
+/* =========================================================
+   FINAL MOBILE / TABLET DROPDOWN MENU
+   Top navbar never moves.
+   No scaling = no stretching.
+   ========================================================= */
+
+@media (max-width: 1020px) {
+  /* TOP BAR */
+  .site-nav,
+  .site-nav.mobile-open {
+    height: 74px;
+    min-height: 74px;
+
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+
+    overflow: visible;
+
+    background: rgba(8, 9, 7, 0.94);
+  }
+
+  /* MENU / CLOSE — IDENTICAL POSITION */
+  .menu-btn,
+  .site-nav.mobile-open .menu-btn {
+    display: block;
+
+    position: absolute;
+    top: 50%;
+    right: clamp(18px, 3vw, 36px);
+
+    width: 56px;
+
+    margin: 0;
+    padding: 0;
+
+    transform: translateY(-50%);
+
+    text-align: center;
+    white-space: nowrap;
+
+    z-index: 10;
+  }
+
+  /* DROPDOWN BACKGROUND */
+  .site-nav::before {
+    content: "";
+
+    position: absolute;
+    top: 74px;
+    left: 0;
+    right: 0;
+
+    height: 215px;
+
+    background: rgba(8, 9, 7, 0.98);
+    border-bottom: 1px solid rgba(232, 227, 215, 0.1);
+    box-shadow: 0 22px 40px rgba(0, 0, 0, 0.38);
+
+    clip-path: inset(0 0 100% 0);
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition:
+      clip-path 0.48s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.25s ease;
+
+    z-index: 0;
+  }
+
+  .site-nav.mobile-open::before {
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+  }
+
+  /* LINKS */
+  .site-nav nav,
+  .site-nav.mobile-open nav {
+    display: grid;
+
+    position: absolute;
+
+    top: 74px;
+    left: clamp(18px, 3vw, 36px);
+    right: clamp(18px, 3vw, 36px);
+
+    width: auto;
+    margin: 0;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 28px;
+
+    padding: 16px 0 4px;
+
+    border-top: 1px solid rgba(232, 227, 215, 0.1);
+
+    opacity: 0;
+
+    visibility: hidden;
+    pointer-events: none;
+
+    transition:
+      opacity 0.18s ease,
+      visibility 0s linear 0.38s;
+  }
+
+  .site-nav nav a,
+  .site-nav.mobile-open nav a {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    line-height: 1.4;
+    text-transform: uppercase;
+
+    padding: 10px 0;
+
+    color: #969c94;
+  }
+
+  .site-nav nav a::after {
+    display: none;
+  }
+
+  .site-nav nav a.active {
+    color: var(--volt);
+  }
+
+  .site-nav.mobile-open nav {
+    opacity: 1;
+
+    visibility: visible;
+    pointer-events: auto;
+
+    transition-delay: 0.08s, 0s;
+  }
+
+  /* START BUTTON */
+  .site-nav .nav-tools,
+  .site-nav.mobile-open .nav-tools {
+    display: flex;
+
+    position: absolute;
+
+    top: 216px;
+    right: clamp(18px, 3vw, 36px);
+
+    width: auto;
+    justify-content: flex-start;
+
+    margin: 0;
+
+    opacity: 0;
+
+    visibility: hidden;
+    pointer-events: none;
+
+    transition:
+      opacity 0.18s ease,
+      visibility 0s linear 0.38s;
+  }
+
+  .site-nav.mobile-open .nav-tools {
+    opacity: 1;
+
+    visibility: visible;
+    pointer-events: auto;
+
+    transition-delay: 0.14s, 0s;
+  }
+}
+
+/* PHONES */
+@media (max-width: 680px) {
+  .site-nav,
+  .site-nav.mobile-open {
+    height: 64px;
+    min-height: 64px;
+  }
+
+  .menu-btn,
+  .site-nav.mobile-open .menu-btn {
+    right: 18px;
+  }
+
+  .site-nav::before {
+    top: 64px;
+    height: 205px;
+  }
+
+  .site-nav nav,
+  .site-nav.mobile-open nav {
+    top: 64px;
+
+    left: 18px;
+    right: 18px;
+
+    gap: 0 18px;
+
+    padding: 14px 0 4px;
+  }
+
+  .site-nav nav a,
+  .site-nav.mobile-open nav a {
+    font-size: 10px;
+    padding: 9px 0;
+  }
+
+  .site-nav .nav-tools,
+  .site-nav.mobile-open .nav-tools {
+    top: 200px;
+    right: 18px;
+  }
+}
+
+/* ACCESSIBILITY */
+@media (prefers-reduced-motion: reduce) {
+  .site-nav::before,
+  .site-nav nav,
+  .site-nav .nav-tools {
+    transition: none;
+  }
+}
+
+/* =========================================================
+   NAV TYPOGRAPHY + POSITION HARD LOCK
+   Prevent ANY font/layout change between MENU and CLOSE
+   ========================================================= */
+
+@media (max-width: 1020px) {
+  /* IRONFORGE — identical open and closed */
+  .site-nav .logo,
+  .site-nav.mobile-open .logo {
+    font-family: var(--display) !important;
+    font-size: 23px !important;
+    font-weight: inherit;
+    line-height: normal !important;
+    letter-spacing: 0.02em !important;
+
+    margin: 0 !important;
+    transform: none !important;
+  }
+
+  /* PERFORMANCE LAB — identical open and closed */
+  .site-nav .logo small,
+  .site-nav.mobile-open .logo small {
+    font-family: var(--sans) !important;
+    font-size: 6px !important;
+    font-weight: 500 !important;
+    line-height: normal !important;
+    letter-spacing: 0.18em !important;
+
+    margin-left: 5px !important;
+    transform: none !important;
+
+    white-space: nowrap;
+  }
+
+  /* NAV LINKS — absolutely no font swap */
+  .site-nav nav a,
+  .site-nav.mobile-open nav a {
+    font-family: var(--sans) !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    font-style: normal !important;
+
+    line-height: 1.4 !important;
+    letter-spacing: 0.12em !important;
+
+    text-transform: uppercase;
+
+    transform: none !important;
+    scale: none !important;
+  }
+
+  /* MENU + CLOSE
+       Same exact box, same center point */
+  .site-nav .menu-btn,
+  .site-nav.mobile-open .menu-btn {
+    position: absolute !important;
+
+    top: 50% !important;
+    right: clamp(18px, 3vw, 36px) !important;
+
+    width: 56px !important;
+    height: auto !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    transform: translateY(-50%) !important;
+
+    text-align: center !important;
+
+    font-family: var(--sans) !important;
+    font-size: 8px !important;
+    font-weight: 400 !important;
+    line-height: 1 !important;
+    letter-spacing: 0.13em !important;
+
+    white-space: nowrap;
+
+    transition: color 0.2s ease !important;
+  }
+}
+
+/* PHONES */
+@media (max-width: 680px) {
+  .site-nav nav a,
+  .site-nav.mobile-open nav a {
+    font-size: 10px !important;
+  }
+
+  .site-nav .menu-btn,
+  .site-nav.mobile-open .menu-btn {
+    right: 18px !important;
+  }
+
+  /* keep existing phone behavior */
+  .site-nav .logo small,
+  .site-nav.mobile-open .logo small {
+    display: none !important;
+  }
+}
+
+/* =========================================================
+   HOME — FINAL CARD LAYOUT ADJUSTMENTS
+   ========================================================= */
+
+
+/* =========================================================
+   TABLET — COACHES
+   2 on first row, third on second row
+   ========================================================= */
+
+@media (min-width:681px) and (max-width:1020px){
+
+    .coach-grid{
+        display:grid;
+        grid-template-columns:repeat(2, minmax(0,1fr));
+        gap:12px;
+    }
+
+    .coach{
+        height:480px;
+    }
+
+    .coach.offset{
+        height:430px;
+        margin-top:50px;
+    }
+
+    /* Third coach gets its own second row */
+    .coach:nth-child(3){
+        grid-column:1 / -1;
+        height:640px;
+        margin-top:0;
+    }
+
+    .coach:nth-child(3) img{
+        object-position:center 15%;
+    }
+}
+
+
+/* =========================================================
+   MOBILE — COACHES
+   2 on first row, third on second row
+   ========================================================= */
+
+@media (max-width:680px){
+
+    .coach-grid{
+        display:grid;
+        grid-template-columns:repeat(2, minmax(0,1fr));
+        gap:8px;
+    }
+
+    .coach,
+    .coach.offset{
+        height:330px;
+        margin:0;
+    }
+
+    /* Keep the slight desktop-style offset */
+    .coach.offset{
+        height:305px;
+        margin-top:25px;
+    }
+
+    /* Third coach fills the next row */
+    .coach:nth-child(3){
+        grid-column:1 / -1;
+        height:420px;
+        margin-top:0;
+    }
+
+    .coach:nth-child(3) img{
+        object-position:center 18%;
+    }
+
+    .coach > div{
+        left:10px;
+        right:10px;
+        bottom:10px;
+    }
+
+    .coach h3{
+        font-size:23px;
+    }
+
+    .coach p{
+        font-size:6px;
+        letter-spacing:.05em;
+    }
+}
+
+
+/* =========================================================
+   MOBILE — PERFORMANCE MODEL
+   2 cards first row
+   third card centered underneath
+   ========================================================= */
+
+@media (max-width:680px){
+
+    .recovery-steps{
+        display:grid;
+        grid-template-columns:repeat(2, minmax(0,1fr));
+
+        column-gap:8px;
+        row-gap:10px;
+    }
+
+
+    .recovery-step{
+        min-height:215px;
+        padding:14px 10px 13px;
+    }
+
+
+    /* 01 + 02 stay side-by-side */
+    .recovery-step:nth-child(1){
+        grid-column:1;
+    }
+
+    .recovery-step:nth-child(2){
+        grid-column:2;
+    }
+
+
+    /* ADAPTATION fills the entire second row */
+    .recovery-step:nth-child(3){
+        grid-column:1 / -1;
+
+        width:100%;
+        min-height:190px;
+
+        justify-self:stretch;
+    }
+
+
+
+    /* Adaptation ends the visual chain */
+    .recovery-step:nth-child(3)::after{
+        display:none;
+    }
+
+
+    .recovery-step h3{
+        font-size:20px;
+        margin:25px 0 8px;
+    }
+
+    .recovery-step p{
+        font-size:7px;
+        line-height:1.5;
+    }
+}
+
+
+/* =========================================================
+   LAPTOP + DESKTOP
+   TRAINING SYSTEMS GREEN HOVER
+   Keep right arrow fully inside green panel
+   ========================================================= */
+
+@media (min-width:1021px){
+
+    /* Everything else can still slide right */
+    .program-row:hover > span,
+    .program-row:hover > div,
+    .program-row:hover > b,
+    .program-row.active > span,
+    .program-row.active > div,
+    .program-row.active > b{
+        transform:translateX(14px);
+    }
+
+    /* Arrow only moves slightly so it never leaves
+       the green background / gets clipped */
+    .program-row:hover > i,
+    .program-row.active > i{
+        transform:translateX(4px);
+    }
+}
+
+@media (max-width:680px){
+
+    .recovery-step::after,
+    .recovery-step::before{
+        display:none !important;
+        content:none !important;
+    }
+}
+
+@media (min-width:681px) and (max-width:1020px){
+
+    .home-principle{
+        min-height:480px;
+        padding:55px 5vw;
+    }
+}
+
+/* HOME — remove Performance Model arrows on every device */
+.home-performance .recovery-step::before,
+.home-performance .recovery-step::after {
+    display: none !important;
+    content: none !important;
+}
+
+/* HOME — align + lift Performance Model progress bars */
+@media (min-width:681px){
+
+    .home-performance .recovery-step{
+        display:flex;
+        flex-direction:column;
+    }
+
+    .home-performance .recovery-meter{
+        margin-top:auto;
+        margin-bottom:14px;
+    }
+}
+
+/* HOME — Training Systems arrow slightly left */
+@media (min-width:1021px){
+
+    .program-row > i{
+        transform:translateX(-4px);
+    }
+
+    .program-row:hover > i,
+    .program-row.active > i{
+        transform:translateX(0);
+    }
+}
+
+/* =========================================================
+   HOME — TABLET HERO
+   Image stays on the right like desktop
+   ========================================================= */
+
+@media (min-width:681px) and (max-width:1020px){
+
+    .home-hero{
+        grid-template-columns:1.02fr .98fr;
+        grid-template-rows:1fr;
+        min-height:540px;
+        height:auto;
+    }
+
+    .home-copy{
+        min-height:540px;
+        padding:72px 5vw;
+    }
+
+    .home-media{
+        position:relative;
+        inset:auto;
+
+        width:auto;
+        height:auto;
+        min-height:0;
+
+        margin:28px 4vw 28px 0;
+
+        opacity:1;
+        z-index:2;
+        pointer-events:auto;
+    }
+}
+
+@media (max-width:680px){
+
+    .home-hero{
+        grid-template-columns:1fr;
+    }
+
+    .home-media{
+        display:none;
+    }
+}
+
+@media (min-width:681px) and (max-width:1020px){
+
+    .home-media img{
+        clip-path:polygon(3% 3%, 97% 0, 100% 96%, 0 100%);
+        filter:saturate(.58) contrast(1.15) brightness(.8);
+    }
+}
+
+@media (min-width:681px) and (max-width:1020px){
+
+    .hero-meta{
+        font-size:6px;
+        letter-spacing:.09em;
+        gap:9px;
+    }
+
+    .hero-meta i{
+        width:32px;
+    }
+}
+
+/* =========================================================
+   PROGRAMS PAGE — RESPONSIVE PASS
+   ========================================================= */
+
+
+/* =========================================================
+   LESS SPACE BETWEEN
+   PROGRAM LIBRARY → BLOCK OVERVIEW
+   ALL SCREEN SIZES
+   ========================================================= */
+
+.programs-page .page-hero + .section{
+    padding-bottom:50px;
+}
+
+.programs-page .overview-section{
+    padding-top:50px;
+}
+
+
+/* =========================================================
+   TABLET + MOBILE
+   ========================================================= */
+
+@media (max-width:1020px){
+
+    /* -----------------------------------------
+       HERO
+       Remove hero image completely
+       ----------------------------------------- */
+
+    .programs-page .page-hero{
+        grid-template-columns:1fr;
+        min-height:500px;
+    }
+
+    .programs-page .page-hero-media{
+        display:none;
+    }
+
+    .programs-page .page-hero-copy{
+        min-height:500px;
+        padding:72px 7vw;
+    }
+
+
+    /* -----------------------------------------
+       PROGRAM LIBRARY
+       2 cards per row
+       ----------------------------------------- */
+
+    .programs-page .content-grid{
+        display:grid;
+        grid-template-columns:repeat(2, minmax(0,1fr));
+        gap:14px;
+    }
+
+    .programs-page .info-block,
+    .programs-page .info-block.wide,
+    .programs-page .info-block.narrow{
+        grid-column:auto;
+    }
+
+    .programs-page .info-image{
+        height:250px;
+    }
+
+    .programs-page .info-block h3{
+        font-size:31px;
+    }
+
+    .programs-page .info-block p{
+        font-size:9px;
+        line-height:1.65;
+    }
+
+
+    /* -----------------------------------------
+       BLOCK OVERVIEW
+       Also stays 2 per row
+       ----------------------------------------- */
+
+    .programs-page .program-overview{
+        grid-template-columns:repeat(2, minmax(0,1fr));
+
+        width:100%;
+        max-width:none;
+
+        gap:14px;
+    }
+
+    .programs-page .overview-card{
+        padding:22px;
+        min-height:260px;
+
+        display:flex;
+        flex-direction:column;
+    }
+
+    .programs-page .overview-card h3{
+        font-size:30px;
+    }
+
+    .programs-page .overview-card strong{
+        font-size:23px;
+    }
+
+    .programs-page .overview-card p{
+        font-size:9px;
+    }
+
+
+    /* tighter transition between both sections */
+
+    .programs-page .page-hero + .section{
+        padding-bottom:38px;
+    }
+
+    .programs-page .overview-section{
+        padding-top:38px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE S / M / L
+   Preserve 2-column composition without cramping
+   ========================================================= */
+
+@media (max-width:680px){
+
+    /* HERO */
+
+    .programs-page .page-hero{
+        min-height:430px;
+    }
+
+    .programs-page .page-hero-copy{
+        min-height:430px;
+        padding:58px 18px;
+    }
+
+
+    /* -----------------------------------------
+       PROGRAM LIBRARY
+       ----------------------------------------- */
+
+    .programs-page .content-grid{
+        grid-template-columns:repeat(2, minmax(0,1fr));
+        gap:8px;
+    }
+
+    .programs-page .info-block{
+        padding-bottom:14px;
+    }
+
+    .programs-page .info-image{
+        height:145px;
+    }
+
+    .programs-page .info-block .num{
+        padding:12px 10px 0;
+        font-size:12px;
+    }
+
+    .programs-page .info-block h3{
+        font-size:21px;
+        line-height:.95;
+
+        margin:7px 10px 8px;
+    }
+
+    .programs-page .info-block p{
+        font-size:7.5px;
+        line-height:1.55;
+
+        margin:0 10px;
+    }
+
+    .programs-page .info-block .card-action{
+        margin:14px 10px 0;
+
+        padding:7px 8px;
+
+        font-size:6.5px;
+        letter-spacing:.07em;
+    }
+
+
+/* =========================================================
+   PROGRAMS — MOBILE BLOCK OVERVIEW
+   2 across, but less cramped
+   ========================================================= */
+
+@media (max-width:680px){
+
+    .programs-page .program-overview{
+        grid-template-columns:repeat(2, minmax(0,1fr));
+        gap:9px;
+    }
+
+    .programs-page .overview-card{
+        min-height:310px;
+        padding:14px 12px;
+
+        display:flex;
+        flex-direction:column;
+    }
+
+
+    /* Title + weeks stack instead of fighting for width */
+    .programs-page .overview-card header{
+        display:block;
+    }
+
+    .programs-page .overview-card h3{
+        font-size:22px;
+        line-height:.95;
+    }
+
+    .programs-page .overview-card strong{
+        display:block;
+
+        margin-top:6px;
+
+        font-size:16px;
+        white-space:nowrap;
+    }
+
+
+    /* Give paragraph a bit more breathing room */
+    .programs-page .overview-card p{
+        font-size:8px;
+        line-height:1.6;
+
+        margin:14px 0 0;
+    }
+
+
+    /* Stack tags vertically */
+    .programs-page .overview-tags{
+        display:grid;
+        grid-template-columns:1fr;
+
+        gap:5px;
+        margin-top:16px;
+    }
+
+    .programs-page .overview-tags span{
+        width:100%;
+
+        font-size:5.5px;
+        letter-spacing:.06em;
+
+        padding:5px 6px;
+    }
+
+
+    /* Keep button at bottom */
+    .programs-page .overview-card .card-action{
+
+        padding:7px 8px;
+
+        font-size:6.5px;
+        letter-spacing:.06em;
+    }
+}
+
+
+    /* Smaller gap between Library + Overview */
+
+    .programs-page .page-hero + .section{
+        padding-bottom:32px;
+    }
+
+    .programs-page .overview-section{
+        padding-top:32px;
+    }
+}
+
+
+/* =========================================================
+   4K / VERY LARGE SCREENS
+   Let Block Overview grow with the rest of the page
+   ========================================================= */
+
+@media (min-width:1700px){
+
+    .programs-page .program-overview{
+        width:100%;
+        max-width:none;
+
+        gap:24px;
+    }
+
+    .programs-page .overview-card{
+        min-height:clamp(300px, 16vw, 410px);
+
+        padding:clamp(34px, 2vw, 58px);
+    }
+
+    .programs-page .overview-card h3{
+        font-size:clamp(38px, 1.6vw, 58px);
+    }
+
+    .programs-page .overview-card strong{
+        font-size:clamp(28px, 1.15vw, 42px);
+    }
+
+    .programs-page .overview-card p{
+        max-width:800px;
+
+        font-size:clamp(11px, .45vw, 15px);
+        line-height:1.75;
+    }
+
+    .programs-page .overview-tags{
+        gap:12px;
+        margin-top:34px;
+    }
+
+    .programs-page .overview-tags span{
+        font-size:clamp(7px, .3vw, 10px);
+        padding:9px 12px;
+    }
+
+    .programs-page .overview-card .card-action{
+        font-size:9px;
+        padding:12px 15px;
+        margin-top:28px;
+    }
+}
+
+/* =========================================================
+   PROGRAMS — ALIGN CARD BUTTONS
+   ALL DEVICES
+   ========================================================= */
+
+
+/* PROGRAM LIBRARY */
+
+.programs-page .info-block{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+}
+
+.programs-page .info-block .info-image{
+    width:100%;
+}
+
+.programs-page .info-block h3{
+    width:calc(100% - 44px);
+    min-height:42px;
+}
+
+.programs-page .info-block p{
+    min-height:58px;
+}
+
+.programs-page .info-block .card-action{
+    margin-top:16px;
+}
+
+
+/* PROGRAMS — BLOCK OVERVIEW BUTTON ALIGNMENT */
+
+.programs-page .overview-card{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+}
+
+.programs-page .overview-card header{
+    width:100%;
+}
+
+.programs-page .overview-card p{
+    min-height:44px;
+}
+
+.programs-page .overview-tags{
+    min-height:46px;
+}
+
+.programs-page .overview-card .card-action{
+    margin-top:12px;
+}
+
+@media (max-width:680px){
+
+    /* PROGRAM LIBRARY — move START button up */
+
+    .programs-page .info-block p{
+        min-height:62px;
+    }
+
+    .programs-page .info-block .card-action{
+        margin-top:8px;
+    }
+
+}
+
+/* =========================================================
+   PROGRAMS — BLOCK OVERVIEW
+   Only buttons align
+   Tags stay in natural position
+   ========================================================= */
+
+.programs-page .overview-card{
+    position:relative;
+    display:block;
+    padding-bottom:82px;
+}
+
+.programs-page .overview-card p,
+.programs-page .overview-tags{
+    min-height:0;
+}
+
+.programs-page .overview-card .card-action{
+    position:absolute;
+    left:28px;
+    bottom:28px;
+
+    margin:0;
+}
+
+@media (max-width:1020px){
+
+    .programs-page .overview-card{
+        padding-bottom:72px;
+    }
+
+    .programs-page .overview-card .card-action{
+        left:22px;
+        bottom:22px;
+    }
+}
+
+@media (max-width:680px){
+
+    .programs-page .overview-card{
+        min-height:270px;
+        padding:14px 12px 60px;
+    }
+
+    .programs-page .overview-card p{
+        margin-top:13px;
+        line-height:1.6;
+    }
+
+    .programs-page .overview-tags{
+        margin-top:12px;
+        gap:5px;
+    }
+
+    .programs-page .overview-card .card-action{
+        left:12px;
+        bottom:15px;
+    }
+}
+
+/* =========================================================
+   PROGRAMS — RESTORE NORMAL OVERVIEW TAGS
+   ========================================================= */
+
+.programs-page .overview-tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+
+    margin-top:16px;
+    min-height:0;
+}
+
+.programs-page .overview-tags span{
+    width:auto;
+
+    font-size:7px;
+    letter-spacing:.11em;
+
+    padding:7px 9px;
+}
+
+@media (max-width:680px){
+
+    .programs-page .overview-tags{
+        display:flex;
+        flex-wrap:wrap;
+
+        gap:5px;
+        margin-top:12px;
+
+        min-height:0;
+    }
+
+    .programs-page .overview-tags span{
+        width:auto;
+
+        font-size:5.5px;
+        letter-spacing:.06em;
+
+        padding:5px 6px;
+    }
+}
+
+/* =========================================================
+   PROGRAMS — TABLET HERO
+   Image stays on the right like desktop
+   ========================================================= */
+
+@media (min-width:681px) and (max-width:1020px){
+
+    .programs-page .page-hero{
+        grid-template-columns:1.02fr .98fr;
+        min-height:540px;
+    }
+
+    .programs-page .page-hero-copy{
+        min-height:540px;
+        padding:72px 5vw;
+    }
+
+    .programs-page .page-hero-media{
+        display:block;
+        min-height:0;
+        height:auto;
+        margin:28px 4vw 28px 0;
+    }
+}
+
+@media (max-width:680px){
+
+    .programs-page .page-hero{
+        grid-template-columns:1fr;
+    }
+
+    .programs-page .page-hero-media{
+        display:none;
+    }
+}
+
+/* =========================================================
+   NUTRITION PAGE — RESPONSIVE PASS
+   ========================================================= */
+
+
+/* PRACTICAL RULE — remove arrows on ALL devices */
+
+.nutrition-page .nutrition-rule-band .recovery-step::before,
+.nutrition-page .nutrition-rule-band .recovery-step::after{
+    display:none !important;
+    content:none !important;
+}
+
+
+/* =========================================================
+   TABLET + MOBILE
+   ========================================================= */
+
+   @media (min-width:681px) and (max-width:1020px){
+
+    .nutrition-page .page-hero{
+        grid-template-columns:1.02fr .98fr;
+        min-height:540px;
+    }
+
+    .nutrition-page .page-hero-copy{
+        min-height:540px;
+        padding:72px 5vw;
+    }
+
+    .nutrition-page .page-hero-media{
+        display:block;
+        min-height:0;
+        height:auto;
+        margin:28px 4vw 28px 0;
+    }
+}
+
+@media (max-width:1020px){
+
+    /* FRAMEWORK — keep 2 cards per row */
+
+    .nutrition-page .framework-grid{
+        display:grid;
+        grid-template-columns:repeat(2, minmax(0,1fr));
+        gap:14px;
+    }
+
+    .nutrition-page .framework-card{
+        min-height:400px;
+    }
+
+    .nutrition-page .framework-card > div{
+        left:20px;
+        right:20px;
+        bottom:20px;
+    }
+
+    .nutrition-page .framework-card h3{
+        font-size:32px;
+    }
+
+    .nutrition-page .framework-card p{
+        font-size:9px;
+        line-height:1.6;
+    }
+}
+
+@media (max-width:680px){
+
+    .nutrition-page .page-hero{
+        grid-template-columns:1fr;
+        min-height:430px;
+    }
+
+    .nutrition-page .page-hero-media{
+        display:none;
+    }
+
+    .nutrition-page .page-hero-copy{
+        min-height:430px;
+        padding:58px 18px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE S / M / L
+   2 across without feeling crushed
+   ========================================================= */
+
+@media (max-width:680px){
+
+    /* HERO */
+
+    .nutrition-page .page-hero{
+        min-height:430px;
+    }
+
+    .nutrition-page .page-hero-copy{
+        min-height:430px;
+        padding:58px 18px;
+    }
+
+
+    /* FRAMEWORK */
+
+    .nutrition-page .framework-grid{
+        grid-template-columns:repeat(2, minmax(0,1fr));
+        gap:12px;
+    }
+
+    .nutrition-page .framework-card{
+        min-height:285px;
+    }
+
+    .nutrition-page .framework-card > div{
+        left:12px;
+        right:12px;
+        bottom:13px;
+    }
+
+    .nutrition-page .framework-card .num{
+        font-size:12px;
+    }
+
+    .nutrition-page .framework-card h3{
+        font-size:22px;
+        line-height:.95;
+        margin:7px 0 8px;
+    }
+
+    .nutrition-page .framework-card p{
+        font-size:7.5px;
+        line-height:1.55;
+        margin-bottom:0;
+    }
+}
+
+/* NUTRITION — align + slightly lift progress bars */
+
+.nutrition-page .nutrition-rule-band .recovery-step{
+    display:flex;
+    flex-direction:column;
+}
+
+.nutrition-page .nutrition-rule-band .recovery-meter{
+    margin-top:auto;
+    margin-bottom:14px;
+}
+
+@media (max-width:680px){
+
+    .nutrition-page .nutrition-rule-band .recovery-meter{
+        margin-top:auto;
+        margin-bottom:40px;
+    }
+}
+
+/* =========================================================
+   COACHES PAGE — FINAL RESPONSIVE RULES
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   ALL DEVICES — BUTTON ALIGNMENT
+   Space after paragraph, NOT stuck at bottom
+   --------------------------------------------------------- */
+
+.coaches-page .coach-card{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+}
+
+.coaches-page .coach-card .info-image{
+    width:100%;
+    flex-shrink:0;
+}
+
+.coaches-page .coach-card h3{
+    min-height:46px;
+}
+
+.coaches-page .coach-card p{
+    min-height:40px;
+    margin-bottom:0;
+}
+
+.coaches-page .coach-card .card-action{
+    align-self:flex-start;
+    margin:20px 22px 0;
+}
+
+
+/* =========================================================
+   NORMAL LAPTOP
+   Keep ORIGINAL sizing — don't mess with it
+   ========================================================= */
+
+@media (min-width:1021px) and (max-width:1399px){
+
+    .coaches-page .page-hero{
+        min-height:620px;
+        height:auto;
+        max-height:none;
+    }
+
+    /* Original hero spacing */
+
+    .coaches-page .page-hero-copy{
+        padding:90px 7vw 68px;
+    }
+
+    .coaches-page .page-hero-media{
+        margin:34px 3vw 34px 0;
+    }
+
+    /* Leave principle at its original desktop feel */
+
+    .coaches-page .coach-principle{
+        min-height:66vh;
+        height:auto;
+    }
+}
+
+
+/* =========================================================
+   LAPTOP L
+   Hero must NOT grow
+   Last section must NOT shrink
+   ========================================================= */
+
+@media (min-width:1400px) and (max-width:1699px){
+
+    /* Same physical hero size as normal laptop */
+
+    .coaches-page .page-hero{
+        height:620px;
+        min-height:620px;
+        max-height:620px;
+    }
+
+    .coaches-page .page-hero-copy{
+        padding:82px 7vw 64px;
+    }
+
+    .coaches-page .page-hero-media{
+        margin:30px 3vw 30px 0;
+    }
+
+
+    /* Slightly stronger coach portraits */
+
+    .coaches-page .coach-card .info-image{
+        height:470px;
+    }
+
+    .coaches-page .coach-card .info-image img{
+        object-position:center 16%;
+    }
+
+
+    /* Last section gets MORE presence,
+       not less than normal laptop */
+
+    .coaches-page .coach-principle{
+        height:620px;
+        min-height:620px;
+        max-height:620px;
+        padding:60px 5vw;
+    }
+}
+
+
+/* =========================================================
+   TABLET
+   Image right + 2 coaches per row
+   ========================================================= */
+
+@media (min-width:681px) and (max-width:1020px){
+
+    .coaches-page .page-hero{
+        grid-template-columns:1.02fr .98fr;
+        min-height:500px;
+    }
+
+    .coaches-page .page-hero-copy{
+        min-height:500px;
+        padding:65px 5vw;
+    }
+
+    .coaches-page .page-hero-media{
+        display:block;
+        min-height:0;
+        height:auto;
+        margin:26px 4vw 26px 0;
+    }
+
+
+    .coaches-page .content-grid{
+        display:grid;
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:14px;
+    }
+
+    .coaches-page .coach-card{
+        grid-column:auto;
+    }
+
+    .coaches-page .coach-card .info-image{
+        height:310px;
+    }
+
+    .coaches-page .coach-card h3{
+        min-height:40px;
+        font-size:31px;
+    }
+
+    .coaches-page .coach-card p{
+        min-height:48px;
+        font-size:9px;
+        line-height:1.65;
+    }
+
+    .coaches-page .coach-card .card-action{
+        margin:18px 22px 0;
+    }
+
+
+    .coaches-page .coach-principle{
+        min-height:380px;
+        height:auto;
+        padding:50px 5vw;
+    }
+
+    .coaches-page .coach-principle h2{
+        font-size:58px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE S / M / L
+   No hero image + 2 coaches per row
+   ========================================================= */
+
+@media (max-width:680px){
+
+    .coaches-page .page-hero{
+        grid-template-columns:1fr;
+        min-height:420px;
+        height:auto;
+    }
+
+    .coaches-page .page-hero-media{
+        display:none;
+    }
+
+    .coaches-page .page-hero-copy{
+        min-height:420px;
+        padding:58px 18px;
+    }
+
+
+    .coaches-page .content-grid{
+        display:grid;
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:10px;
+    }
+
+    .coaches-page .coach-card{
+        grid-column:auto;
+        padding-bottom:22px;
+    }
+
+    .coaches-page .coach-card .info-image{
+        height:215px;
+    }
+
+    .coaches-page .coach-card .info-image img{
+        object-position:center 14%;
+    }
+
+    .coaches-page .coach-card .num{
+        padding:12px 10px 0;
+        font-size:12px;
+    }
+
+    .coaches-page .coach-card h3{
+        min-height:42px;
+        font-size:22px;
+        line-height:.95;
+        margin:7px 10px 8px;
+    }
+
+    .coaches-page .coach-card p{
+        min-height:62px;
+        font-size:7.5px;
+        line-height:1.55;
+        margin:0 10px;
+    }
+
+    /* LEFT aligned + real gap after paragraph */
+
+    .coaches-page .coach-card .card-action{
+        align-self:flex-start;
+        margin:16px 10px 0;
+        padding:7px 8px;
+
+        font-size:6.5px;
+        letter-spacing:.06em;
+    }
+
+
+    .coaches-page .coach-principle{
+        min-height:350px;
+        height:auto;
+        padding:45px 18px;
+    }
+}
+
+
+/* =========================================================
+   4K / LARGE DESKTOP
+   Hero + final section controlled
+   Middle section actually scales
+   ========================================================= */
+
+@media (min-width:1700px){
+
+    /* DO NOT use vh here.
+       That was making it enormous on 4K. */
+
+    .coaches-page .page-hero{
+        height:680px;
+        min-height:680px;
+        max-height:680px;
+    }
+
+    .coaches-page .page-hero-copy{
+        padding:90px 7vw 70px;
+    }
+
+    .coaches-page .page-hero-media{
+        margin:34px 3vw 34px 0;
+    }
+
+
+    /* THIS fixes the tiny/cropped coach issue.
+       Width grows -> portrait area grows with it. */
+
+    .coaches-page .coach-card .info-image{
+        height:auto;
+        aspect-ratio:16 / 9;
+    }
+
+    .coaches-page .coach-card .info-image img{
+        object-position:center 14%;
+    }
+
+    .coaches-page .coach-card h3{
+        min-height:52px;
+    }
+
+    .coaches-page .coach-card p{
+        min-height:42px;
+    }
+
+    .coaches-page .coach-card .card-action{
+        margin-top:24px;
+    }
+
+
+    /* Smaller than the ridiculous 66vh 4K version,
+       but still substantial */
+
+    .coaches-page .coach-principle{
+        height:760px;
+        min-height:760px;
+        max-height:760px;
+        padding:70px 5vw;
+    }
+}
+
+/* =========================================================
+   COACHES — FINAL MICRO ADJUSTMENTS
+   ========================================================= */
+
+
+/* MOBILE S / M / L
+   Slightly shorter cards + button slightly higher */
+
+@media (max-width:680px){
+
+    .coaches-page .coach-card{
+        padding-bottom:18px;
+    }
+
+    .coaches-page .coach-card .info-image{
+        height:210px;
+    }
+
+    .coaches-page .coach-card p{
+        min-height:58px;
+    }
+
+    .coaches-page .coach-card .card-action{
+        margin-top:12px;
+    }
+}
+
+
+/* NORMAL LAPTOP
+   Only make the final section a little shorter */
+
+@media (min-width:1021px) and (max-width:1399px){
+
+    .coaches-page .coach-principle{
+        min-height:400px;
+        height:460px;
+        max-height:460px;
+    }
+}
+
+
+/* LAPTOP L
+   Hero gets more presence */
+
+@media (min-width:1400px) and (max-width:1699px){
+
+    .coaches-page .page-hero{
+        height:700px;
+        min-height:700px;
+        max-height:700px;
+    }
+}
+
+
+/* 4K
+   Bigger than Laptop L, but still controlled */
+
+@media (min-width:1700px){
+
+    .coaches-page .page-hero{
+        height:1100px;
+        min-height:1100px;
+        max-height:1100px;
+    }
+}
+
+/* =========================================================
+   FUEL PAGE — RESPONSIVE PASS
+   ========================================================= */
+
+
+/* =========================================================
+   LAPTOP
+   Keep final image on the RIGHT
+   ========================================================= */
+
+@media (min-width:1021px) and (max-width:1399px){
+
+    .fuel-page .fuel-extra{
+        grid-template-columns:1.1fr .9fr;
+        gap:18px;
+    }
+
+    .fuel-page .fuel-extra article{
+        min-height:430px;
+    }
+}
+
+
+/* =========================================================
+   TABLET
+   Hero image RIGHT
+   Products 2 across
+   Final image RIGHT
+   ========================================================= */
+
+@media (min-width:681px) and (max-width:1020px){
+
+    /* HERO */
+
+    .fuel-page .page-hero{
+        grid-template-columns:1.05fr .95fr;
+        min-height:520px;
+    }
+
+    .fuel-page .page-hero-copy{
+        min-height:520px;
+        padding:68px 5vw;
+    }
+
+    .fuel-page .page-hero-media{
+        display:block;
+        min-height:0;
+        height:auto;
+        margin:28px 4vw 28px 0;
+    }
+
+    .fuel-page .page-hero-media.contain-media img{
+        width:78%;
+        height:86%;
+    }
+
+
+    /* PRODUCTS — 2 PER ROW */
+
+    .fuel-page .product-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:14px;
+    }
+
+    .fuel-page .product-card{
+        min-height:520px;
+    }
+
+    .fuel-page .product-visual{
+        height:280px;
+    }
+
+
+    /* FINAL SECTION — IMAGE ON RIGHT */
+
+    .fuel-page .fuel-extra{
+        grid-template-columns:1.2fr .8fr;
+        gap:14px;
+        align-items:stretch;
+    }
+
+    .fuel-page .fuel-extra article{
+        min-height:390px;
+        padding:24px;
+    }
+
+    .fuel-page .fuel-extra article.visual{
+        padding:0;
+    }
+
+    .fuel-page .fuel-extra h3{
+        font-size:44px;
+    }
+
+    .fuel-page .fuel-extra p{
+        font-size:10px;
+        line-height:1.7;
+    }
+
+    .fuel-page .fuel-checks{
+        gap:9px;
+        margin-top:25px;
+    }
+
+    .fuel-page .fuel-checks span{
+        font-size:7px;
+        padding-top:9px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE S / M / L
+   No hero image
+   Products 2 across
+   Final image integrated on RIGHT — not sitting alone below
+   ========================================================= */
+
+@media (max-width:680px){
+
+    /* HERO */
+
+    .fuel-page .page-hero{
+        grid-template-columns:1fr;
+        min-height:420px;
+    }
+
+    .fuel-page .page-hero-media{
+        display:none;
+    }
+
+    .fuel-page .page-hero-copy{
+        min-height:420px;
+        padding:58px 18px;
+    }
+
+
+    /* PRODUCTS */
+
+    .fuel-page .product-grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:10px;
+    align-items:stretch;
+}
+
+.fuel-page .product-card{
+    height:375px;
+    min-height:375px;
+    padding:10px;
+    display:flex;
+    flex-direction:column;
+}
+
+.fuel-page .product-visual{
+    height:165px;
+    min-height:165px;
+    flex-shrink:0;
+}
+
+.fuel-page .product-visual img{
+    width:92%;
+    height:92%;
+}
+
+.fuel-page .product-card h3{
+    font-size:22px;
+    line-height:.95;
+    margin:13px 0 7px;
+
+    /* same title space on every card */
+    min-height:42px;
+}
+
+.fuel-page .product-card p{
+    font-size:7.5px;
+    line-height:1.55;
+    margin:0;
+
+    /* same paragraph space on every card */
+    min-height:47px;
+}
+
+.fuel-page .product-price{
+    font-size:20px;
+
+    /* pushes every price to the same position */
+    margin-top:auto !important;
+}
+
+.fuel-page .product-price small{
+    font-size:6px;
+}
+
+.fuel-page .buy-btn{
+    margin-top:10px;
+    padding:8px 9px;
+    font-size:6.5px;
+    letter-spacing:.07em;
+    flex-shrink:0;
+}
+
+
+    /* FINAL SECTION
+       Narrow image panel stays beside content */
+
+    .fuel-page .fuel-extra{
+        display:grid;
+        grid-template-columns:minmax(0,1.5fr) minmax(85px,.8fr);
+        gap:8px;
+        margin-top:48px;
+        align-items:stretch;
+    }
+
+    .fuel-page .fuel-extra article{
+        min-height:375px;
+        padding:16px 12px;
+    }
+
+    .fuel-page .fuel-extra article.visual{
+        min-height:375px;
+        padding:0;
+    }
+
+    .fuel-page .fuel-extra article.visual img{
+        width:100%;
+        height:100%;
+        object-fit:cover;
+    }
+
+    .fuel-page .fuel-extra h3{
+        font-size:29px;
+        line-height:.9;
+        margin:12px 0;
+    }
+
+    .fuel-page .fuel-extra p{
+        font-size:7.5px;
+        line-height:1.6;
+    }
+
+    .fuel-page .fuel-checks{
+        gap:7px;
+        margin-top:18px;
+    }
+
+    .fuel-page .fuel-checks span{
+        padding-top:7px;
+        font-size:5.8px;
+        letter-spacing:.06em;
+    }
+}
+
+
+/* =========================================================
+   4K
+   Laptop L intentionally untouched
+   Make PRODUCT section substantially stronger
+   Final section gets a smaller bump
+   ========================================================= */
+
+@media (min-width:1700px){
+
+    .fuel-page .section{
+        padding-top:130px;
+        padding-bottom:135px;
+    }
+
+
+    /* PRODUCTS — primary 4K fix */
+
+    .fuel-page .product-grid{
+        gap:24px;
+    }
+
+    .fuel-page .product-card{
+        min-height:680px;
+        padding:26px;
+    }
+
+    .fuel-page .product-visual{
+        height:clamp(430px,22vw,560px);
+    }
+
+    .fuel-page .product-visual img{
+        width:92%;
+        height:92%;
+    }
+
+    .fuel-page .product-card h3{
+        font-size:42px;
+    }
+
+
+    /* FINAL SECTION */
+
+ .fuel-page .fuel-extra{
+    grid-template-columns:1.08fr .92fr;
+    gap:28px;
+    margin-top:96px;
+}
+
+.fuel-page .fuel-extra article{
+    min-height:640px;
+    padding:48px;
+}
+
+.fuel-page .fuel-extra article.visual{
+    padding:0;
+}
+
+.fuel-page .fuel-extra h3{
+    font-size:64px;
+}
+}
+
+@media (min-width:1700px){
+
+    .fuel-page .product-card .product-price{
+        margin-top:45px;
+    }
+
+}
+
+@media (max-width:680px){
+
+    .fuel-page .product-card .product-price{
+        margin-top:20px;
+    }
+
+}
+
+/* =========================================================
+   START PAGE — RESPONSIVE
+   ========================================================= */
+
+
+/* TABLET — image stays on the right */
+
+@media (min-width:681px) and (max-width:1020px){
+
+    .start-page .page-hero{
+        grid-template-columns:1.05fr .95fr;
+        min-height:500px;
+    }
+
+    .start-page .page-hero-copy{
+        min-height:500px;
+        padding:68px 5vw;
+    }
+
+    .start-page .page-hero-media{
+        display:block;
+        min-height:0;
+        height:auto;
+        margin:28px 4vw 28px 0;
+    }
+}
+
+
+/* MOBILE S / M / L — ONLY remove hero image */
+
+@media (max-width:680px){
+
+    .start-page .page-hero-media{
+        display:none;
+    }
+}
+@media (max-width:680px){
+
+    .start-page .page-hero{
+        min-height:470px;
+    }
+
+    .start-page .page-hero-copy{
+        min-height:470px;
+    }
+
+    .start-page .page-hero-media{
+        display:none;
+    }
+}
+
+
+/* 4K — slightly smaller compact hero */
+
+@media (min-width:1700px){
+
+    .start-page .page-hero.compact{
+        height:800px;
+        min-height:800px;
+        max-height:800px;
+    }
+
+    .start-page .page-hero-media{
+        margin-top:26px;
+        margin-bottom:26px;
+    }
+}
+
+@media (min-width:1700px){
+
+    .start-page .form-section{
+        min-height:1300px;
+        padding-top:110px;
+        padding-bottom:110px;
+        align-items:center;
+    }
+
+}
+
+/* =========================================================
+   SUPPORT PAGE — RESPONSIVE
+   ========================================================= */
+
+
+/* TABLET — keep hero image on the right */
+@media (min-width:681px) and (max-width:1020px){
+
+    .support-page .page-hero{
+        grid-template-columns:1.05fr .95fr;
+        min-height:500px;
+    }
+
+    .support-page .page-hero-copy{
+        min-height:500px;
+        padding:68px 5vw;
+    }
+
+    .support-page .page-hero-media{
+        display:block;
+        min-height:0;
+        height:auto;
+        margin:28px 4vw 28px 0;
+    }
+}
+
+
+/* MOBILE S / M / L — only remove hero picture */
+@media (max-width:680px){
+
+    .support-page .page-hero-media{
+        display:none;
+    }
+}
+@media (max-width:680px){
+
+    .support-page .page-hero{
+        min-height:470px;
+    }
+
+    .support-page .page-hero-copy{
+        min-height:470px;
+    }
+
+    .support-page .page-hero-media{
+        display:none;
+    }
+}
+
+
+/* LAPTOP L */
+@media (min-width:1400px) and (max-width:1699px){
+
+    /* slightly smaller hero */
+    .support-page .page-hero.compact{
+        height:620px;
+        min-height:620px;
+        max-height:620px;
+    }
+
+    .support-page .page-hero-media{
+        margin-top:26px;
+        margin-bottom:26px;
+    }
+
+    /* FAQ grows with screen */
+    .support-page .faq-list{
+        width:82%;
+        max-width:1220px;
+    }
+
+    .support-page .faq-item button{
+        font-size:30px;
+        padding:26px 0 13px;
+    }
+
+    .support-page .faq-answer p{
+        font-size:13px;
+        line-height:1.75;
+        max-width:900px;
+    }
+
+    .support-page .faq-item.open .faq-answer p{
+        padding-bottom:26px;
+    }
+}
+
+
+/* 4K / LARGE DESKTOP */
+@media (min-width:1700px){
+
+    /* prevent oversized hero */
+    .support-page .page-hero.compact{
+        height:950px;
+        min-height:950px;
+        max-height:950px;
+    }
+
+    .support-page .page-hero-copy{
+        padding-top:70px;
+        padding-bottom:60px;
+    }
+
+    .support-page .page-hero-media{
+        margin-top:28px;
+        margin-bottom:28px;
+    }
+
+    /* FAQ actually scales with the large screen */
+    .support-page .faq-list{
+        width:78%;
+        max-width:1550px;
+    }
+
+    .support-page .faq-item button{
+        font-size:36px;
+        padding:31px 0 15px;
+    }
+
+    .support-page .faq-answer p{
+        font-size:15px;
+        line-height:1.8;
+        max-width:1150px;
+    }
+
+    .support-page .faq-item.open .faq-answer p{
+        padding-bottom:30px;
+    }
+}
+
+/* =========================================================
+   CONTACT PAGE — RESPONSIVE
+   ========================================================= */
+
+
+/* TABLET — image on the right */
+@media (min-width:681px) and (max-width:1020px){
+
+    .contact-page .page-hero{
+        grid-template-columns:1.05fr .95fr;
+        min-height:540px;
+    }
+
+    .contact-page .page-hero-copy{
+        min-height:540px;
+        padding:70px 5vw;
+    }
+
+    .contact-page .page-hero-media{
+        display:block;
+        min-height:0;
+        height:auto;
+        margin:28px 4vw 28px 0;
+    }
+}
+
+
+/* MOBILE S / M / L — only remove hero image */
+@media (max-width:680px){
+
+    .contact-page .page-hero-media{
+        display:none;
+    }
+}
+@media (max-width:680px){
+
+    .contact-page .page-hero{
+        min-height:470px;
+    }
+
+    .contact-page .page-hero-copy{
+        min-height:470px;
+    }
+
+    .contact-page .page-hero-media{
+        display:none;
+    }
+}
+
+
+/* 4K */
+@media (min-width:1700px){
+
+    /* hero slightly bigger */
+    .contact-page .page-hero{
+        height:1000px;
+        min-height:1000px;
+        max-height:1000px;
+    }
+
+    .contact-page .page-hero-media{
+        margin-top:34px;
+        margin-bottom:34px;
+    }
+
+
+    /* smaller footer */
+    .contact-page + .footer,
+    .contact-page .footer{
+        padding:20px 3vw 16px !important;
+    }
+}
+
+@media (min-width:1700px){
+
+    .contact-page .form-section{
+        min-height:1300px;
+        padding-top:110px;
+        padding-bottom:110px;
+        align-items:center;
+    }
+
+}
+
+/* =========================================================
+   GLOBAL 4K READABILITY
+   ========================================================= */
+
+@media (min-width:1700px){
+
+    /* NAVIGATION */
+    .site-nav nav a,
+    .nav-cta{
+        font-size:9px !important;
+    }
+
+    .logo small{
+        font-size:7px;
+    }
+
+
+    /* SMALL LABELS / MICRO TEXT */
+    .micro,
+    .hero-meta,
+    .hero-telemetry,
+    .overview-tags span,
+    .fuel-checks span,
+    .form-grid label span{
+        font-size:9px;
+    }
+
+    .form-note{
+        font-size:9px !important;
+    }
+
+
+    /* MAIN BODY COPY */
+    .home-copy > p,
+    .page-hero-copy p,
+    .performance-copy p,
+    .info-block p,
+    .overview-card p,
+    .framework-card p,
+    .product-card p,
+    .fuel-extra p,
+    .form-intro p,
+    .faq-answer p,
+    .legal p{
+        font-size:14px;
+        line-height:1.75;
+    }
+
+
+    /* HOME — TRAINING SYSTEM ROWS */
+    .program-row p{
+        font-size:13px;
+        line-height:1.65;
+    }
+
+    .program-row > span,
+    .program-row > b,
+    .program-row > i{
+        font-size:10px;
+    }
+
+
+    /* PERFORMANCE MODEL */
+    .recovery-step p{
+        font-size:12px;
+        line-height:1.65;
+    }
+
+
+    /* COACH CARD SMALL COPY */
+    .coach p{
+        font-size:10px;
+    }
+
+
+    /* BUTTONS / CTAs */
+    .home-actions a,
+    .performance-copy > a,
+    .card-action,
+    .buy-btn,
+    .form-grid button{
+        font-size:10px;
+    }
+
+
+    /* FOOTER TEXT */
+    .footer-nav a,
+    .footer-meta{
+        font-size:9px;
+    }
+}
+
+/* FUEL — LAPTOP ONLY
+   Slightly smaller Whey + Creatine product images */
+@media (min-width:1021px) and (max-width:1399px){
+
+    .product-card:nth-child(1) .product-visual img,
+    .product-card:nth-child(2) .product-visual img{
+        width:80%;
+        height:80%;
+    }
+}

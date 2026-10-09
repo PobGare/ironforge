@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#080907" />
+    <title>IRONFORGE — Programs</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;600;700;800;900&family=Saira+Semi+Condensed:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="programs-page">
+    <canvas id="forgeParticles" class="forge-particles"></canvas>
+    <div class="noise"></div>
+    <div class="forge-cursor"></div>
+    <header class="site-nav">
+      <a class="logo" href="index.html"
+        ><span>IRON</span><b>FORGE</b><small>PERFORMANCE LAB</small></a
+      >
+      <nav>
+        <a href="index.html">Home</a><a href="programs.html">Programs</a
+        ><a href="nutrition.html">Nutrition</a
+        ><a href="trainers.html">Coaches</a><a href="supplements.html">Fuel</a>
+      </nav>
+      <div class="nav-tools">
+        <a class="nav-cta magnetic" href="start.html">START ↗</a>
+      </div>
+      <button class="menu-btn" aria-expanded="false">MENU</button>
+    </header>
+    <main class="page-shell">
+      <section class="page-hero">
+        <canvas class="energy-canvas"></canvas>
+        <div class="page-hero-copy reveal">
+          <span class="micro">01 / PROGRAMS</span>
+          <h1>TRAIN FOR THE<br /><em>RESULT.</em></h1>
+          <p>
+            Four focused routes, each built around a measurable outcome. Choose
+            the adaptation first — then earn it through a block with a clear
+            progression model.
+          </p>
+        </div>
+        <div class="page-hero-media reveal" data-tilt>
+          <img src="assets/strength.webp" alt="Heavy strength training" />
+        </div>
+      </section>
+      <section class="section">
+        <header class="section-head reveal">
+          <span class="micro">PROGRAM LIBRARY</span>
+          <h2>Different goals.<br /><em>Different variables.</em></h2>
+        </header>
+        <div class="content-grid">
+          <article
+            class="info-block wide reveal clickable-card"
+            tabindex="0"
+            data-href="start.html"
+            id="strength"
+          >
+            <div class="info-image">
+              <img src="assets/strength.webp" alt="Strength training" />
+            </div>
+            <span class="num">01</span>
+            <h3>Strength Protocol</h3>
+            <p>
+              Compound patterns, technical repeatability and progressively
+              heavier exposures for measurable strength without turning every
+              session into a max-out.
+            </p>
+            <a class="card-action" href="start.html">START THIS BLOCK ↗</a>
+          </article>
+          <article
+            class="info-block narrow reveal clickable-card"
+            tabindex="0"
+            data-href="start.html"
+            id="muscle"
+          >
+            <div class="info-image">
+              <img src="assets/muscle.webp" alt="Muscle building" />
+            </div>
+            <span class="num">02</span>
+            <h3>Hypertrophy Block</h3>
+            <p>
+              Manageable volume, smart exercise selection and effort targets
+              designed to accumulate productive work.
+            </p>
+            <a class="card-action" href="start.html">START THIS BLOCK ↗</a>
+          </article>
+          <article
+            class="info-block narrow reveal clickable-card"
+            tabindex="0"
+            data-href="start.html"
+            id="fatloss"
+          >
+            <div class="info-image">
+              <img src="assets/fatloss.webp" alt="Conditioning training" />
+            </div>
+            <span class="num">03</span>
+            <h3>Conditioning Cut</h3>
+            <p>
+              Keep strength exposure while increasing work capacity and
+              supporting a sustainable energy deficit.
+            </p>
+            <a class="card-action" href="start.html">START THIS BLOCK ↗</a>
+          </article>
+          <article
+            class="info-block wide reveal clickable-card"
+            tabindex="0"
+            data-href="start.html"
+            id="beginner"
+          >
+            <div class="info-image">
+              <img
+                src="assets/beginner.webp"
+                alt="Beginner resistance training"
+              />
+            </div>
+            <span class="num">04</span>
+            <h3>Foundation Cycle</h3>
+            <p>
+              Movement literacy, habit formation and a repeatable weekly
+              structure for people building their first serious base.
+            </p>
+            <a class="card-action" href="start.html">START THIS BLOCK ↗</a>
+          </article>
+        </div>
+      </section>
+      <section class="section overview-section">
+        <header class="section-head reveal">
+          <span class="micro">BLOCK OVERVIEW</span>
+          <h2>Know the demand.<br /><em>Choose the fit.</em></h2>
+        </header>
+        <div class="program-overview">
+          <article class="overview-card reveal">
+            <header>
+              <h3>Strength</h3>
+              <strong>12 WKS</strong>
+            </header>
+            <p>
+              For lifters who can train consistently and want their primary
+              lifts moving up without abandoning technique.
+            </p>
+            <div class="overview-tags">
+              <span>3–4 lifting days</span><span>progressive loading</span
+              ><span>clean reps</span>
+            </div>
+            <a class="card-action" href="start.html">ASSESS FIT ↗</a>
+          </article>
+          <article class="overview-card reveal">
+            <header>
+              <h3>Hypertrophy</h3>
+              <strong>10 WKS</strong>
+            </header>
+            <p>
+              For building muscle through repeatable volume, controlled effort
+              and clear progression rather than random exercise rotation.
+            </p>
+            <div class="overview-tags">
+              <span>4–5 sessions</span><span>volume progression</span
+              ><span>effort targets</span>
+            </div>
+            <a class="card-action" href="start.html">ASSESS FIT ↗</a>
+          </article>
+          <article class="overview-card reveal">
+            <header>
+              <h3>Conditioning</h3>
+              <strong>8 WKS</strong>
+            </header>
+            <p>
+              For improving work capacity while preserving enough lifting
+              exposure to hold onto strength and muscle.
+            </p>
+            <div class="overview-tags">
+              <span>3 lifting days</span><span>2 conditioning days</span
+              ><span>paced workload</span>
+            </div>
+            <a class="card-action" href="start.html">ASSESS FIT ↗</a>
+          </article>
+          <article class="overview-card reveal">
+            <header>
+              <h3>Foundation</h3>
+              <strong>8 WKS</strong>
+            </header>
+            <p>
+              For newer lifters who need consistency, movement confidence and a
+              clean weekly structure before specialization.
+            </p>
+            <div class="overview-tags">
+              <span>3 full-body days</span><span>skill first</span
+              ><span>simple progression</span>
+            </div>
+            <a class="card-action" href="start.html">ASSESS FIT ↗</a>
+          </article>
+        </div>
+      </section>
+    </main>
+    <footer class="footer">
+      <a class="logo" href="index.html"><span>IRON</span><b>FORGE</b></a>
+      <div class="footer-nav">
+        <a href="programs.html">Programs</a
+        ><a href="nutrition.html">Nutrition</a
+        ><a href="trainers.html">Coaches</a><a href="supplements.html">Fuel</a
+        ><a href="contact.html">Contact</a><a href="support.html">Support</a>
+      </div>
+      <div class="footer-meta">FITNESS CONCEPT / PORTFOLIO / 2026</div>
+    </footer>
+    <script src="script.js"></script>
+  </body>
+</html>
